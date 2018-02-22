@@ -1,5 +1,5 @@
-const config3 = [['(', ')']];
-var str = '()';
+const config3 = [['(', ')'], ['|', '|']];
+var str = '|()|';
 var count = 0;
 var open = new Array();
 
@@ -16,14 +16,16 @@ function message(){
                     break;
                 }
                 else count+=1;
+
+                if (count==config3[j].length)
+                return false;
             }
-            if (count==config3.length)
-            return false;
+            
         }
         
         else if(open.length>0){
            for(var a=0;a<config3.length;a++){
-            for(var b=0;b<config3.length;b++){
+            for(var b=0;b<config3[a].length;b++){
                if(str[i]==config3[a][b]){
                   strA = a;
                   strB = b;
@@ -36,13 +38,16 @@ function message(){
             }
            }
 
-           if (strA==openA){
+           if (strA==openA && strB!=openB){
                open.pop();
            }
-           else if(strB==openB){
+           else if(strA!=openA && strB==openB){
                open.push(str[i]);
             }
-            else return false;
+            else if(strA==openA && strB==openB){
+                open.pop();
+            }
+           else return false;
         }
 
     }
@@ -53,5 +58,6 @@ function message(){
     else return false;
     
 }
-
+console.log(str[0]);
+console.log(open);
 console.log(message());
