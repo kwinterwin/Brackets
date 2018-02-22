@@ -1,33 +1,35 @@
-module.exports = function check(str, bracketsConfig) {
+const config3 = [['(', ')']];
+var str = '()';
+var count = 0;
+var open = new Array();
 
-    var count = 0;
-    var open = new Array();
+var strA, strB, openA, openB;
 
-    var strA, strB, openA, openB;
+function message(){
     
     for(var i=0; i<str.length;i++){
         if (open.length==0){
             count=0;
-            for(var j=0;j<bracketsConfig.length;j++){
-                if(str[i]==bracketsConfig[j][0]){
+            for(var j=0;j<config3.length;j++){
+                if(str[i]==config3[j][0]){
                     open.push(str[i]);
                     break;
                 }
                 else count+=1;
             }
-            if (count==bracketsConfig.length)
+            if (count==config3.length)
             return false;
         }
         
         else if(open.length>0){
-           for(var a=0;a<bracketsConfig.length;a++){
-            for(var b=0;b<bracketsConfig.length;b++){
-               if(str[i]==bracketsConfig[a][b]){
+           for(var a=0;a<config3.length;a++){
+            for(var b=0;b<config3.length;b++){
+               if(str[i]==config3[a][b]){
                   strA = a;
                   strB = b;
                }
 
-                if(open[open.length-1]==bracketsConfig[a][b]){
+                if(open[open.length-1]==config3[a][b]){
                     openA=a;
                     openB=b;
                 }
@@ -40,7 +42,7 @@ module.exports = function check(str, bracketsConfig) {
            else if(strB==openB){
                open.push(str[i]);
             }
-           else return false;
+            else return false;
         }
 
     }
@@ -49,5 +51,7 @@ module.exports = function check(str, bracketsConfig) {
         return true;
     }
     else return false;
-  
+    
 }
+
+console.log(message());
